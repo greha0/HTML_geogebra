@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <style>
+            #myCanvas{
+                border: 1px solid black;
+                width: 100vh;
+            }
+
+            .cont{
+                display: flex;
+                width: 100%;
+                height: 100%;
+            }
+
+            .menu{
+                border: 1px solid black;
+                width: 20vh;
+                margin-left: 1%; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cont">
+            <canvas id="myCanvas" width="300" height="200"> </canvas>
+            <div class="menu"></div>
+         </div>
+    </body>
+    <script>
+        var myCanvas = document.getElementById("myCanvas");
+        var ctx = myCanvas.getContext('2d');
+        var xMax, yMax, xMin, yMin, unitaX, unitaY, canvasX, canvasY, pixelX, pixelY, origineX, origineY;
+
+    </script>
+</html>
