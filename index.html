@@ -1,85 +1,113 @@
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            #myCanvas{
-                border: 1px solid black;
-                width: 60%;
-            }
-
-            .cont{
-                display: flex;
-                justify-content: center;
-                width: 80%;
-                height: fit-content;
-                margin: 0 auto;
-            }
-
-            .menu{
-                border: 1px solid black;
-                width: 20%;
-                margin-left: 1%; 
-            }
-
-            @media screen and(max-height: 800px){
-                .cont{
-                   width: 100%; 
-                }
-                
-            }
-        </style>
-    </head>
-    <body>
-        <div class="cont">
-            <canvas id="myCanvas" width="500" height="500"> </canvas>
-            <div class="menu"></div>
-         </div>
-    </body>
-    <script>
-        var myCanvas = document.getElementById("myCanvas");
-        var ctx = myCanvas.getContext('2d');
-        var dimensioniCanvas = 500; //Do per scontato che sia un quadrato
-        var unitaCanvas = 20; //Quanto vale ogni unità sul canvas
-        var unitaPixel = dimensioniCanvas / unitaCanvas; //Quanto vale ogni unità sullo schermo
-        var origineX = -(-10) * unitaPixel;
-        var origineY = 499 - (-(-10) * unitaPixel);
-        var valoreX = 2, //Quanto aumenta
-            valoreY = 0; //Soluzione della funzione
-        var x = origineX + (valoreX * unitaCanvas);
-        var y = origineY - (valoreY * unitaCanvas);
-        var funzione = "x+1";
-
-        
-        function creaAssi(){
-            ctx.beginPath();
-            ctx.moveTo(0, 250);
-            ctx.lineTo(500,250);
-            ctx.stroke();
-            ctx.closePath();
-
-            ctx.beginPath();
-            ctx.moveTo(250, 0);
-            ctx.lineTo(250, 500);
-            ctx.stroke();
-            ctx.closePath();
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafico Funzione</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9cb0da;
         }
 
-        valoreY = eval(funzione.replace("x", 2));
-        alert(valoreY);
-        /*for(var i = 0; i<dimensioniCanvas/2; i+=valoreX){
-            valoreY = eval(funzione.replace("x", i))
-            alert(valoreY);
-            x = origineX + (valoreX * unitaCanvas);
-            y = origineY - (valoreY * unitaCanvas);
-            if(i==0){
-                ctx.moveTo(x);  
+        .cont {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        canvas {
+            border: 1px solid black;
+            width: 70%;
+            max-width: 600px;
+            height: auto;
+            background-color: rgb(197, 197, 214);
+        }
+
+        .menu {
+            border: 1px solid black;
+            width: 20%;
+            padding: 10px;
+            margin-left: 10px;
+            background-color: rgb(128, 128, 146);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <canvas id="myCanvas"></canvas>
+        <div class="menu">
+            <form>
+                <label> Inserisci la funzione: </label>
+                <input type="text" id="funz">
+                <input type="button" value="Disegna!" onclick="geogebra()">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = 500;
+        canvas.height = 500;
+
+        const dimCanvas = 500;
+        const unitaCanvas = 20;
+        const unitaPixel = dimCanvas / unitaCanvas;
+        const origineX = canvas.width / 2;
+        const origineY = canvas.height / 2;
+
+        function creaAssi(){
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+
+            // Asse X
+            ctx.beginPath();
+            ctx.moveTo(0, origineY);
+            ctx.lineTo(canvas.width, origineY);
+            ctx.stroke();
+
+            // Asse Y
+            ctx.beginPath();
+            ctx.moveTo(origineX, 0);
+            ctx.lineTo(origineX, canvas.height);
+            ctx.stroke();
+        }
+
+        function geogebra(){
+            const funzione = document.getElementById("funz").value;
+            
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            creaAssi(); 
+
+            ctx.beginPath();
+            let primoPunto = true;
+
+            for(let i = -10; i <= 10; i += 0.1){
+                const x = origineX + i * unitaPixel;
+                const y = origineY - (eval(funzione.replace("x", i))) * unitaPixel;
+
+                if (primoPunto) {
+                    ctx.moveTo(x, y);
+                    primoPunto = false;
+                } else {
+                    ctx.lineTo(x, y);
+                }
             }
-        }*/
+            
+            ctx.stroke();
+        }
 
         creaAssi();
-
-
-        
-
     </script>
+</body>
 </html>
