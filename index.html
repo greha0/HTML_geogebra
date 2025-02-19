@@ -1,34 +1,85 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             #myCanvas{
                 border: 1px solid black;
-                width: 100vh;
+                width: 60%;
             }
 
             .cont{
                 display: flex;
-                width: 100%;
-                height: 100%;
+                justify-content: center;
+                width: 80%;
+                height: fit-content;
+                margin: 0 auto;
             }
 
             .menu{
                 border: 1px solid black;
-                width: 20vh;
+                width: 20%;
                 margin-left: 1%; 
+            }
+
+            @media screen and(max-height: 800px){
+                .cont{
+                   width: 100%; 
+                }
+                
             }
         </style>
     </head>
     <body>
         <div class="cont">
-            <canvas id="myCanvas" width="300" height="200"> </canvas>
+            <canvas id="myCanvas" width="500" height="500"> </canvas>
             <div class="menu"></div>
          </div>
     </body>
     <script>
         var myCanvas = document.getElementById("myCanvas");
         var ctx = myCanvas.getContext('2d');
-        var xMax, yMax, xMin, yMin, unitaX, unitaY, canvasX, canvasY, pixelX, pixelY, origineX, origineY;
+        var dimensioniCanvas = 500; //Do per scontato che sia un quadrato
+        var unitaCanvas = 20; //Quanto vale ogni unità sul canvas
+        var unitaPixel = dimensioniCanvas / unitaCanvas; //Quanto vale ogni unità sullo schermo
+        var origineX = -(-10) * unitaPixel;
+        var origineY = 499 - (-(-10) * unitaPixel);
+        var valoreX = 2, //Quanto aumenta
+            valoreY = 0; //Soluzione della funzione
+        var x = origineX + (valoreX * unitaCanvas);
+        var y = origineY - (valoreY * unitaCanvas);
+        var funzione = "x+1";
+
+        
+        function creaAssi(){
+            ctx.beginPath();
+            ctx.moveTo(0, 250);
+            ctx.lineTo(500,250);
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.moveTo(250, 0);
+            ctx.lineTo(250, 500);
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        valoreY = eval(funzione.replace("x", 2));
+        alert(valoreY);
+        /*for(var i = 0; i<dimensioniCanvas/2; i+=valoreX){
+            valoreY = eval(funzione.replace("x", i))
+            alert(valoreY);
+            x = origineX + (valoreX * unitaCanvas);
+            y = origineY - (valoreY * unitaCanvas);
+            if(i==0){
+                ctx.moveTo(x);  
+            }
+        }*/
+
+        creaAssi();
+
+
+        
 
     </script>
 </html>
